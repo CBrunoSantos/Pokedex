@@ -16,13 +16,14 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
       (_$pokeAPIComputed ??= Computed<PokeAPI>(() => super.pokeAPI,
               name: '_PokeApiStoreBase.pokeAPI'))
           .value;
-  Computed<PokeAPI> _$corPokemonAtualComputed;
+  Computed<Pokemon> _$pokemonAtualComputed;
 
   @override
-  PokeAPI get corPokemonAtual => (_$corPokemonAtualComputed ??=
-          Computed<PokeAPI>(() => super.corPokemonAtual,
-              name: '_PokeApiStoreBase.corPokemonAtual'))
-      .value;
+  Pokemon get pokemonAtual =>
+      (_$pokemonAtualComputed ??= Computed<Pokemon>(() => super.pokemonAtual,
+              name: '_PokeApiStoreBase.pokemonAtual'))
+          .value;
+  Computed<PokeAPI> _$corPokemonAtualComputed;
 
   final _$_pokeAPIAtom = Atom(name: '_PokeApiStoreBase._pokeAPI');
 
@@ -39,36 +40,23 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
     });
   }
 
-  final _$pokemonAtualAtom = Atom(name: '_PokeApiStoreBase.pokemonAtual');
+  final _$_pokemonAtualAtom = Atom(name: '_PokeApiStoreBase._pokemonAtual');
 
   @override
-  Pokemon get pokemonAtual {
-    _$pokemonAtualAtom.reportRead();
-    return super.pokemonAtual;
+  Pokemon get _pokemonAtual {
+    _$_pokemonAtualAtom.reportRead();
+    return super._pokemonAtual;
   }
 
   @override
-  set pokemonAtual(Pokemon value) {
-    _$pokemonAtualAtom.reportWrite(value, super.pokemonAtual, () {
-      super.pokemonAtual = value;
+  set _pokemonAtual(Pokemon value) {
+    _$_pokemonAtualAtom.reportWrite(value, super._pokemonAtual, () {
+      super._pokemonAtual = value;
     });
   }
 
   final _$_corPokemonAtualAtom =
       Atom(name: '_PokeApiStoreBase._corPokemonAtual');
-
-  @override
-  dynamic get _corPokemonAtual {
-    _$_corPokemonAtualAtom.reportRead();
-    return super._corPokemonAtual;
-  }
-
-  @override
-  set _corPokemonAtual(dynamic value) {
-    _$_corPokemonAtualAtom.reportWrite(value, super._corPokemonAtual, () {
-      super._corPokemonAtual = value;
-    });
-  }
 
   final _$_PokeApiStoreBaseActionController =
       ActionController(name: '_PokeApiStoreBase');
@@ -120,9 +108,8 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
   @override
   String toString() {
     return '''
-pokemonAtual: ${pokemonAtual},
 pokeAPI: ${pokeAPI},
-corPokemonAtual: ${corPokemonAtual}
+pokemonAtual: ${pokemonAtual},
     ''';
   }
 }
