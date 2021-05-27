@@ -23,7 +23,6 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
       (_$pokemonAtualComputed ??= Computed<Pokemon>(() => super.pokemonAtual,
               name: '_PokeApiStoreBase.pokemonAtual'))
           .value;
-  Computed<PokeAPI> _$corPokemonAtualComputed;
 
   final _$_pokeAPIAtom = Atom(name: '_PokeApiStoreBase._pokeAPI');
 
@@ -55,8 +54,39 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
     });
   }
 
-  final _$_corPokemonAtualAtom =
-      Atom(name: '_PokeApiStoreBase._corPokemonAtual');
+  final _$corPokemonAtom = Atom(name: '_PokeApiStoreBase.corPokemon');
+
+  @override
+  dynamic get corPokemon {
+    _$corPokemonAtom.context.enforceReadPolicy(_$corPokemonAtom);
+    _$corPokemonAtom.reportObserved();
+    return super.corPokemon;
+  }
+
+  @override
+  set corPokemon(dynamic value) {
+    _$corPokemonAtom.context.conditionallyRunInAction(() {
+      super.corPokemon = value;
+      _$corPokemonAtom.reportChanged();
+    }, _$corPokemonAtom, name: '${_$corPokemonAtom.name}_set');
+  }
+
+  final _$posicaoAtualAtom = Atom(name: '_PokeApiStoreBase.posicaoAtual');
+
+  @override
+  int get posicaoAtual {
+    _$posicaoAtualAtom.context.enforceReadPolicy(_$posicaoAtualAtom);
+    _$posicaoAtualAtom.reportObserved();
+    return super.posicaoAtual;
+  }
+
+  @override
+  set posicaoAtual(int value) {
+    _$posicaoAtualAtom.context.conditionallyRunInAction(() {
+      super.posicaoAtual = value;
+      _$posicaoAtualAtom.reportChanged();
+    }, _$posicaoAtualAtom, name: '${_$posicaoAtualAtom.name}_set');
+  }
 
   final _$_PokeApiStoreBaseActionController =
       ActionController(name: '_PokeApiStoreBase');
@@ -92,13 +122,5 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
     } finally {
       _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
     }
-  }
-
-  @override
-  String toString() {
-    return '''
-pokeAPI: ${pokeAPI},
-pokemonAtual: ${pokemonAtual},
-    ''';
   }
 }

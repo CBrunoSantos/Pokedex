@@ -8,7 +8,6 @@ import 'package:prokedex_project/pages/home_page/widgets/app_bar_home.dart';
 import 'package:prokedex_project/pages/home_page/widgets/poke_item.dart';
 import 'package:prokedex_project/pages/poke_detail/poke_datail_page.dart';
 import 'package:prokedex_project/stores/pokeapi_store.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
