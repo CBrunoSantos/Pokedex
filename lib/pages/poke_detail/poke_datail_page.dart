@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:prokedex_project/consts/consts_app.dart';
 import 'package:prokedex_project/models/pokeapi.dart';
+import 'package:prokedex_project/pages/about_page/about_page.dart';
 import 'package:prokedex_project/stores/pokeapi_store.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
@@ -33,7 +34,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
   void initState() {
     super.initState();
     _pageController =
-        PageController(initialPage: widget.index, viewportFraction: 0.5);
+        PageController(initialPage: widget.index, viewportFraction: 0.4);
     _pokemonStore = GetIt.instance<PokeApiStore>();
     _pokemon = _pokemonStore.pokemonAtual;
     _animation = MultiTrackTween([
@@ -63,6 +64,12 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
           Observer(
             builder: (context) {
               return AnimatedContainer(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    _pokemonStore.corPokemon.withOpacity(0.5),
+                    _pokemonStore.corPokemon
+                  ]),
+                ),
                 child: Stack(
                   children: [
                     AppBar(
@@ -175,7 +182,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
                   ],
                 ),
                 height: MediaQuery.of(context).size.height / 1.3,
-                color: _pokemonStore.corPokemon,
+                // color: _pokemonStore.corPokemon,
                 duration: Duration(milliseconds: 1000),
               );
             },
@@ -199,7 +206,9 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
             ),
             builder: (context, state) {
               return Container(
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height * 0.12,
+                child: AboutPage(),
               );
             },
           ),
