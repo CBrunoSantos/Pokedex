@@ -36,6 +36,8 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
         PageController(initialPage: widget.index, viewportFraction: 0.4);
     _pokemonStore = GetIt.instance<PokeApiStore>();
     _pokeApiV2Store = GetIt.instance<PokeApiV2Store>();
+    _pokeApiV2Store.getInfoPokemon(_pokemonStore.pokemonAtual.name);
+    _pokeApiV2Store.getInfoSpecie(_pokemonStore.pokemonAtual.id.toString());
     _animation = MultiTrackTween([
       Track("rotation").add(Duration(seconds: 5), Tween(begin: 0.0, end: 6),
           curve: Curves.linear)
@@ -120,21 +122,6 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
                         ),
                       ],
                     ),
-                    // Stack(
-                    //   alignment: Alignment.centerLeft,
-                    //   children: <Widget>[
-                    //     Positioned(
-                    //       child: Text(
-                    //         _pokemonStore.pokemonAtual.name,
-                    //         style: TextStyle(
-                    //             fontFamily: 'Google',
-                    //             fontSize: 38,
-                    //             fontWeight: FontWeight.bold,
-                    //             color: Colors.white),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     Positioned(
                       top: (MediaQuery.of(context).size.height * 0.12) -
                           _progress *

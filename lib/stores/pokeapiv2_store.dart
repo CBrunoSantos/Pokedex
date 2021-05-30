@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:mobx/mobx.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:prokedex_project/consts/consts_api.dart';
 import 'package:prokedex_project/models/pokeapiv2.dart';
@@ -19,8 +20,8 @@ abstract class _PokeApiV2StoreBase with Store {
   @action
   Future<void> getInfoPokemon(String nome) async {
     try {
-      final response = await http
-          .get(Uri.parse(ConstsAPI.pokeapiv2URL + nome.toLowerCase()));
+      final response =
+          await http.get(ConstsAPI.pokeapiv2URL + nome.toLowerCase());
       var decodeJson = jsonDecode(response.body);
       pokeApiV2 = PokeApiV2.fromJson(decodeJson);
     } catch (error, stacktrace) {
@@ -33,8 +34,8 @@ abstract class _PokeApiV2StoreBase with Store {
   Future<void> getInfoSpecie(String numPokemon) async {
     try {
       specie = null;
-      final response = await http
-          .get(Uri.parse(ConstsAPI.pokeapiv2EspeciesURL + numPokemon));
+      final response =
+          await http.get(ConstsAPI.pokeapiv2EspeciesURL + numPokemon);
       var decodeJson = jsonDecode(response.body);
       var _specie = Specie.fromJson(decodeJson);
       specie = _specie;

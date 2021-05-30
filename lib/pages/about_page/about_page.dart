@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
-import 'package:prokedex_project/models/specie.dart';
+import 'package:prokedex_project/pages/about_page/widgets/aba_sobre.dart';
 import 'package:prokedex_project/stores/pokeapi_store.dart';
-import 'package:prokedex_project/stores/pokeapiv2_store.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -16,14 +15,12 @@ class _AboutPageState extends State<AboutPage>
   TabController _tabController;
   PageController _pageController;
   PokeApiStore _pokemonStore;
-  PokeApiV2Store _pokeApiV2Store;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _pokemonStore = GetIt.instance<PokeApiStore>();
-    _pokeApiV2Store = GetIt.instance<PokeApiV2Store>();
     _pageController = PageController(initialPage: 0);
   }
 
@@ -34,11 +31,8 @@ class _AboutPageState extends State<AboutPage>
         backgroundColor: Colors.white,
         elevation: 1,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(40),
+          preferredSize: Size.fromHeight(20),
           child: Observer(builder: (context) {
-            _pokeApiV2Store.getInfoPokemon(_pokemonStore.pokemonAtual.name);
-            _pokeApiV2Store
-                .getInfoSpecie(_pokemonStore.pokemonAtual.id.toString());
             return TabBar(
               onTap: (index) {
                 _pageController.animateToPage(index,
@@ -82,49 +76,7 @@ class _AboutPageState extends State<AboutPage>
         },
         controller: _pageController,
         children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Description',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Observer(
-                    builder: (context) {
-                      Specie _specie = _pokeApiV2Store.specie;
-                      return _specie != null
-                          ? Text(
-                              _specie.flavorTextEntries
-                                  .where((item) => item.language.name == 'en')
-                                  .first
-                                  .flavorText,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            )
-                          : SizedBox(
-                              height: 15,
-                              width: 15,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    _pokemonStore.corPokemon),
-                              ),
-                            );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
+          AbaSobre(),
           Container(color: Colors.purple),
           Container(color: Colors.amber),
         ],
