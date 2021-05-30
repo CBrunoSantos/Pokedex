@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -8,6 +6,7 @@ import 'package:prokedex_project/consts/consts_app.dart';
 import 'package:prokedex_project/models/pokeapi.dart';
 import 'package:prokedex_project/pages/about_page/about_page.dart';
 import 'package:prokedex_project/stores/pokeapi_store.dart';
+import 'package:prokedex_project/stores/pokeapiv2_store.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:sliding_sheet/sliding_sheet.dart';
 
@@ -22,8 +21,8 @@ class PokeDetailPage extends StatefulWidget {
 
 class _PokeDetailPageState extends State<PokeDetailPage> {
   PageController _pageController;
-  Pokemon _pokemon;
   PokeApiStore _pokemonStore;
+  PokeApiV2Store _pokeApiV2Store;
   MultiTrackTween _animation;
   double _progress;
   double _multiple;
@@ -36,7 +35,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
     _pageController =
         PageController(initialPage: widget.index, viewportFraction: 0.4);
     _pokemonStore = GetIt.instance<PokeApiStore>();
-    _pokemon = _pokemonStore.pokemonAtual;
+    _pokeApiV2Store = GetIt.instance<PokeApiV2Store>();
     _animation = MultiTrackTween([
       Track("rotation").add(Duration(seconds: 5), Tween(begin: 0.0, end: 6),
           curve: Curves.linear)
@@ -221,6 +220,10 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
                   controller: _pageController,
                   onPageChanged: (index) {
                     _pokemonStore.setPokemonAtual(index: index);
+                    _pokeApiV2Store
+                        .getInfoPokemon(_pokemonStore.pokemonAtual.name);
+                    _pokeApiV2Store.getInfoSpecie(
+                        _pokemonStore.pokemonAtual.id.toString());
                   },
                   itemCount: _pokemonStore.pokeAPI.pokemon.length,
                   itemBuilder: (BuildContext context, int index) {
