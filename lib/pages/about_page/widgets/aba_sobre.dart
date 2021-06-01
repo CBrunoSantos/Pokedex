@@ -74,7 +74,7 @@ class AbaSobre extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Altura',
+                          'Height',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class AbaSobre extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Peso',
+                          'Weight',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -104,28 +104,6 @@ class AbaSobre extends StatelessWidget {
                         ),
                         Text(
                           _pokeApiStore.pokemonAtual.weight,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Altura',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54),
-                        ),
-                        Text(
-                          _pokeApiStore.pokemonAtual.height,
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,

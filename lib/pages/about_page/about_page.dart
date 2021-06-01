@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
+import 'package:mobx/mobx.dart';
+import 'package:prokedex_project/pages/about_page/widgets/aba_evolucao.dart';
 import 'package:prokedex_project/pages/about_page/widgets/aba_sobre.dart';
+import 'package:prokedex_project/pages/about_page/widgets/aba_status.dart';
 import 'package:prokedex_project/stores/pokeapi_store.dart';
 
 class AboutPage extends StatefulWidget {
@@ -15,6 +18,7 @@ class _AboutPageState extends State<AboutPage>
   TabController _tabController;
   PageController _pageController;
   PokeApiStore _pokemonStore;
+  ReactionDisposer _disposer;
 
   @override
   void initState() {
@@ -22,6 +26,17 @@ class _AboutPageState extends State<AboutPage>
     _tabController = TabController(length: 3, vsync: this);
     _pokemonStore = GetIt.instance<PokeApiStore>();
     _pageController = PageController(initialPage: 0);
+
+    _disposer = reaction(
+        (f) => _pokemonStore.pokemonAtual,
+        (r) => _pageController.animateToPage(0,
+            duration: Duration(milliseconds: 200), curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -77,8 +92,8 @@ class _AboutPageState extends State<AboutPage>
         controller: _pageController,
         children: [
           AbaSobre(),
-          Container(color: Colors.purple),
-          Container(color: Colors.amber),
+          AbaEvolucao(),
+          AbaStatus(),
         ],
       ),
     );

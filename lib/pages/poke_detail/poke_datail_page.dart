@@ -239,29 +239,36 @@ class _PokeDetailPageState extends State<PokeDetailPage> {
                             );
                           },
                         ),
-                        Observer(builder: (context) {
-                          return AnimatedPadding(
-                            duration: Duration(milliseconds: 950),
-                            curve: Curves.bounceInOut,
-                            padding: EdgeInsets.all(
-                                index == _pokemonStore.posicaoAtual ? 0 : 60),
-                            child: Hero(
-                              tag: _pokeitem.name,
-                              child: CachedNetworkImage(
-                                height: 160,
-                                width: 160,
-                                placeholder: (context, url) => new Container(
-                                  color: Colors.transparent,
-                                ),
-                                color: index == _pokemonStore.posicaoAtual
-                                    ? null
-                                    : Colors.black.withOpacity(0.5),
-                                imageUrl:
-                                    'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeitem.num}.png',
-                              ),
-                            ),
-                          );
-                        }),
+                        IgnorePointer(
+                          child: Observer(
+                              name: 'Pokemon',
+                              builder: (context) {
+                                return AnimatedPadding(
+                                  duration: Duration(milliseconds: 950),
+                                  curve: Curves.bounceInOut,
+                                  padding: EdgeInsets.all(
+                                      index == _pokemonStore.posicaoAtual
+                                          ? 0
+                                          : 60),
+                                  child: Hero(
+                                    tag: _pokeitem.name,
+                                    child: CachedNetworkImage(
+                                      height: 160,
+                                      width: 160,
+                                      placeholder: (context, url) =>
+                                          new Container(
+                                        color: Colors.transparent,
+                                      ),
+                                      color: index == _pokemonStore.posicaoAtual
+                                          ? null
+                                          : Colors.black.withOpacity(0.5),
+                                      imageUrl:
+                                          'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${_pokeitem.num}.png',
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
                       ],
                     );
                   },
